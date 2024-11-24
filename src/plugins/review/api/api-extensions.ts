@@ -7,6 +7,9 @@ const commonApiExtensions = gql`
     comment: String!
     createdAt: DateTime!
     updatedAt: DateTime!
+    order: Order
+    productVariant: ProductVariant
+    seller: Seller
   }
 `;
 

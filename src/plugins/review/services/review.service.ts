@@ -52,7 +52,7 @@ export class ReviewService {
   ): Promise<PaginatedList<Review>> {
     return this.listQueryBuilder
       .build(Review, options, {
-        relations,
+        relations: ["order", "productVariant", "seller"],
         ctx,
       })
       .getManyAndCount()
@@ -71,7 +71,7 @@ export class ReviewService {
   ): Promise<Review | null> {
     return this.connection.getRepository(ctx, Review).findOne({
       where: { id },
-      relations,
+      relations: ["order", "productVariant", "seller"],
     });
   }
 
