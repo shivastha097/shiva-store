@@ -153,16 +153,13 @@ export class ReviewService {
   }
 
   async update(ctx: RequestContext, input: UpdateReviewInput): Promise<Review> {
-    const { id, rating, comment } = input;
+    const { id, rating } = input;
 
     if (rating !== undefined && (rating < 1 || rating > 5))
       throw new UserInputError("Rating must be between 1 and 5.");
 
     try {
       const review = await this.connection.getEntityOrThrow(ctx, Review, id);
-
-      if (review.customer.id !== ctx.activeUserId)
-        throw new UserInputError("You can only update your own reviews");
 
       // Update the review
       const updatedReview = patchEntity(review, input);
@@ -180,9 +177,6 @@ export class ReviewService {
   async delete(ctx: RequestContext, id: ID): Promise<DeletionResponse> {
     try {
       const review = await this.connection.getEntityOrThrow(ctx, Review, id);
-
-      if (review.customer.id !== ctx.activeUserId)
-        throw new UserInputError("You can only delete your own reviews");
 
       // Delete the review
       await this.connection.getRepository(ctx, Review).remove(review);

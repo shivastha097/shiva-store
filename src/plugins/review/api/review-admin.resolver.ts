@@ -1,6 +1,6 @@
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { DeletionResponse } from "@vendure/common/lib/generated-types";
+import { Args, Query, Resolver } from "@nestjs/graphql";
 import {
+  Allow,
   Ctx,
   ID,
   ListQueryOptions,
@@ -8,14 +8,9 @@ import {
   RelationPaths,
   Relations,
   RequestContext,
-  Transaction,
 } from "@vendure/core";
 import { Review } from "../entities/review.entity";
-import {
-  CreateReviewInput,
-  ReviewService,
-  UpdateReviewInput,
-} from "../services/review.service";
+import { ReviewService } from "../services/review.service";
 
 @Resolver()
 export class ReviewAdminResolver {
@@ -62,32 +57,5 @@ export class ReviewAdminResolver {
       productVariantId
     );
     return result || 0;
-  }
-
-  @Mutation()
-  @Transaction()
-  async createReview(
-    @Ctx() ctx: RequestContext,
-    @Args() args: { input: CreateReviewInput }
-  ): Promise<Review> {
-    return this.reviewService.create(ctx, args.input);
-  }
-
-  @Mutation()
-  @Transaction()
-  async updateReview(
-    @Ctx() ctx: RequestContext,
-    @Args() args: { input: UpdateReviewInput }
-  ): Promise<Review> {
-    return this.reviewService.update(ctx, args.input);
-  }
-
-  @Mutation()
-  @Transaction()
-  async deleteReview(
-    @Ctx() ctx: RequestContext,
-    @Args() args: { id: ID }
-  ): Promise<DeletionResponse> {
-    return this.reviewService.delete(ctx, args.id);
   }
 }

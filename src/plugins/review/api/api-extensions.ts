@@ -3,8 +3,6 @@ import gql from "graphql-tag";
 const commonApiExtensions = gql`
   type Review implements Node {
     id: ID!
-    createdAt: DateTime!
-    updatedAt: DateTime!
     rating: Int!
     comment: String!
     createdAt: DateTime!
@@ -18,16 +16,15 @@ export const shopApiExtensions = gql`
   input CreateReviewInput {
     rating: Int!
     comment: String!
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    orderId: ID!
+    productVariantId: ID!
+    sellerId: ID!
   }
 
   input UpdateReviewInput {
     id: ID!
     rating: Int
     comment: String
-    createdAt: DateTime
-    updatedAt: DateTime
   }
 
   extend type Mutation {
@@ -43,8 +40,8 @@ export const adminApiExtensions = gql`
   extend type Query {
     review(id: ID!): Review
     reviews(options: ReviewListOptions): ReviewList!
-    avgSellerRating(sellerId: ID!): Float
-    avgProductVariantRating(productVariantId: ID!): Float
+    averageSellerRating(sellerId: ID!): Float
+    averageProductVariantRating(productVariantId: ID!): Float
   }
 
   # Generated at run-time by Vendure

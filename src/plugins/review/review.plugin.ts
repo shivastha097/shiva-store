@@ -6,6 +6,7 @@ import { Review } from "./entities/review.entity";
 import { ReviewService } from "./services/review.service";
 import { ReviewAdminResolver } from "./api/review-admin.resolver";
 import { adminApiExtensions, shopApiExtensions } from "./api/api-extensions";
+import { ReviewShopResolver } from "./api/review-shop.resolver";
 
 @VendurePlugin({
   imports: [PluginCommonModule],
@@ -24,11 +25,11 @@ import { adminApiExtensions, shopApiExtensions } from "./api/api-extensions";
   entities: [Review],
   adminApiExtensions: {
     schema: adminApiExtensions,
-    resolvers: [ReviewAdminResolver, ReviewAdminResolver],
+    resolvers: [ReviewAdminResolver],
   },
   shopApiExtensions: {
     schema: shopApiExtensions,
-    resolvers: [ReviewAdminResolver],
+    resolvers: [ReviewShopResolver],
   },
 })
 export class ReviewPlugin {
